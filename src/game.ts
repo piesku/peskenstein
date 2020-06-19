@@ -5,7 +5,6 @@ import {Camera} from "./components/com_camera.js";
 import {loop_start, loop_stop} from "./core.js";
 import {sys_camera} from "./systems/sys_camera.js";
 import {sys_control_player} from "./systems/sys_control_player.js";
-import {sys_draw} from "./systems/sys_draw.js";
 import {sys_framerate} from "./systems/sys_framerate.js";
 import {sys_light} from "./systems/sys_light.js";
 import {sys_move} from "./systems/sys_move.js";
@@ -29,9 +28,6 @@ export class Game {
     CanvasScene = document.querySelector("canvas#scene")! as HTMLCanvasElement;
     Gl = this.CanvasScene.getContext("webgl")!;
     ExtVao = this.Gl.getExtension("OES_vertex_array_object")!;
-
-    CanvasBillboard = document.querySelector("canvas#billboard")! as HTMLCanvasElement;
-    Context2D = this.CanvasBillboard.getContext("2d")!;
 
     MaterialDiffuseGouraud = mat1_diffuse_gouraud(this.Gl);
     MeshCube = mesh_cube(this.Gl);
@@ -95,7 +91,6 @@ export class Game {
         sys_camera(this, delta);
         sys_light(this, delta);
         sys_render(this, delta);
-        sys_draw(this, delta);
         sys_framerate(this, delta, performance.now() - now);
     }
 }
