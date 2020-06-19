@@ -3,7 +3,7 @@ import {from_axis} from "../../common/quat.js";
 import {Entity, Game} from "../game.js";
 import {Has} from "../world.js";
 
-const QUERY = Has.Move | Has.ControlPlayer;
+const QUERY = Has.Move | Has.ControlPlayer | Has.Shoot;
 const AXIS_Y = <Vec3>[0, 1, 0];
 
 export function sys_control_player(game: Game, delta: number) {
@@ -49,5 +49,10 @@ function update(game: Game, entity: Entity, delta: number) {
             // Rotate right
             move.LocalRotations.push(from_axis([0, 0, 0, 0], AXIS_Y, -Math.PI));
         }
+    }
+
+    if (game.InputState["Space"]) {
+        let shoot = game.World.Shoot[entity];
+        shoot.Trigger = true;
     }
 }
