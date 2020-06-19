@@ -9,23 +9,28 @@ const QUERY = Has.Transform | Has.Shoot;
 export function sys_shoot(game: Game, delta: number) {
     for (let i = 0; i < game.World.Mask.length; i++) {
         if ((game.World.Mask[i] & QUERY) === QUERY) {
-            update(game, i);
+            update(game, i, delta);
         }
     }
 }
 
-function update(game: Game, entity: Entity) {
+function update(game: Game, entity: Entity, delta: number) {
     let shoot = game.World.Shoot[entity];
+    shoot.SinceLast += delta;
+
     if (shoot.Trigger) {
         shoot.Trigger = false;
+        if (shoot.SinceLast > shoot.Frequency) {
+            shoot.SinceLast = 0;
 
-        let shooter_transform = game.World.Transform[entity];
-        let projectile = instantiate(game, {
-            Scale: [0.1, 0.1, 0.1],
-            Using: [render_diffuse(game.MaterialDiffuseGouraud, game.MeshCube, [0.3, 1, 1, 1])],
-        });
-        let projectile_transform = game.World.Transform[projectile];
-        get_translation(projectile_transform.Translation, shooter_transform.World);
-        get_rotation(projectile_transform.Rotation, shooter_transform.World);
+            let shooter_transform = game.World.Transform[entity];
+            let projectile = instantiate(game, {
+                Scale: [0.1, 0.1, 0.1],
+                Using: [render_diffuse(game.MaterialDiffuseGouraud, game.MeshCube, [0.3, 1, 1, 1])],
+            });
+            let projectile_transform = game.World.Transform[projectile];
+            get_translation(projectile_transform.Translation, shooter_transform.World);
+            get_rotation(projectile_transform.Rotation, shooter_transform.World);
+        }
     }
 }
