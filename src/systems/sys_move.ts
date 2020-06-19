@@ -1,6 +1,6 @@
 import {get_translation} from "../../common/mat4.js";
 import {Quat, Vec3} from "../../common/math.js";
-import {lerp, multiply, normalize as normalize_quat} from "../../common/quat.js";
+import {multiply, slerp} from "../../common/quat.js";
 import {
     add,
     normalize as normalize_vec3,
@@ -52,12 +52,7 @@ function update(game: Game, entity: Entity, delta: number) {
     // Rotations applied relative to the local space (parent's or world).
     if (move.LocalRotations.length) {
         let rotation = move.LocalRotations.reduce(multiply_rotations);
-        if (move.RotateSpeed < Infinity) {
-            // Ease the rotation out by lerping with t ~ delta, which isn't
-            // proper lerping, but is good enough to smooth the movement a bit.
-            lerp(rotation, NO_ROTATION, rotation, Math.min(move.RotateSpeed * delta, 1));
-            normalize_quat(rotation, rotation);
-        }
+        slerp(rotation, NO_ROTATION, rotation, (move.RotationSpeed / Math.PI) * delta);
 
         // Pre-multiply.
         multiply(transform.Rotation, rotation, transform.Rotation);
@@ -68,12 +63,7 @@ function update(game: Game, entity: Entity, delta: number) {
     // Rotations applied relative to the self space.
     if (move.SelfRotations.length) {
         let rotation = move.SelfRotations.reduce(multiply_rotations);
-        if (move.RotateSpeed < Infinity) {
-            // Ease the rotation out by lerping with t ~ delta, which isn't
-            // proper lerping, but is good enough to smooth the movement a bit.
-            lerp(rotation, NO_ROTATION, rotation, Math.min(move.RotateSpeed * delta, 1));
-            normalize_quat(rotation, rotation);
-        }
+        slerp(rotation, NO_ROTATION, rotation, (move.RotationSpeed / Math.PI) * delta);
 
         // Post-multiply.
         multiply(transform.Rotation, transform.Rotation, rotation);
