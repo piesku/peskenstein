@@ -43,11 +43,11 @@ function update(game: Game, entity: Entity, delta: number) {
         let move = game.World.Move[entity];
         if (game.InputState["ArrowLeft"]) {
             // Rotate left
-            move.LocalRotations.push(from_axis([0, 0, 0, 0], AXIS_Y, Math.PI * control.Yaw));
+            move.LocalRotations.push(from_axis([0, 0, 0, 0], AXIS_Y, Math.PI));
         }
         if (game.InputState["ArrowRight"]) {
             // Rotate right
-            move.LocalRotations.push(from_axis([0, 0, 0, 0], AXIS_Y, -Math.PI * control.Yaw));
+            move.LocalRotations.push(from_axis([0, 0, 0, 0], AXIS_Y, -Math.PI));
         }
     }
 }

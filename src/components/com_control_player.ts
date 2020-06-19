@@ -3,16 +3,16 @@ import {Has} from "../world.js";
 
 export interface ControlPlayer {
     Move: boolean;
-    Yaw: number;
+    Yaw: boolean;
 }
 
 /**
  * The ControlPlayer mixin.
  *
  * @param Move - Whether to control the entity's movement.
- * @param Yaw - Sensitivity of yaw control.
+ * @param Yaw - Whether to control the entity's yaw.
  */
-export function control_player(move: boolean, yaw: number) {
+export function control_player(move: boolean, yaw: boolean) {
     return (game: Game, entity: Entity) => {
         game.World.Mask[entity] |= Has.ControlPlayer;
         game.World.ControlPlayer[entity] = {
