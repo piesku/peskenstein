@@ -5,6 +5,7 @@ import {Camera} from "./components/com_camera.js";
 import {loop_start, loop_stop} from "./core.js";
 import {sys_camera} from "./systems/sys_camera.js";
 import {sys_control_player} from "./systems/sys_control_player.js";
+import {sys_control_projectile} from "./systems/sys_control_projectile.js";
 import {sys_framerate} from "./systems/sys_framerate.js";
 import {sys_lifespan} from "./systems/sys_lifespan.js";
 import {sys_light} from "./systems/sys_light.js";
@@ -70,6 +71,7 @@ export class Game {
         let now = performance.now();
         sys_lifespan(this, delta);
         sys_control_player(this, delta);
+        sys_control_projectile(this, delta);
         sys_shoot(this, delta);
         sys_move(this, delta);
         sys_transform(this, delta);

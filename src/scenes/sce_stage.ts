@@ -76,8 +76,8 @@ export function scene_stage(game: Game) {
                         Translation: [x - 4.5, 1, y - 4.5],
                         Children: [
                             {
-                                Translation: [0, -0.25, 0],
-                                Scale: [0.3, 0.5, 0.3],
+                                Translation: [0, -0.15, 0],
+                                Scale: [0.3, 0.7, 0.3],
                                 Using: [
                                     render_diffuse(game.MaterialDiffuseGouraud, game.MeshCube, [
                                         1,
