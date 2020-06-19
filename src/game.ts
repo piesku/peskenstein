@@ -52,25 +52,6 @@ export class Game {
             this.InputState[evt.code] = 0;
             this.InputDelta[evt.code] = -1;
         });
-        this.Ui.addEventListener("mousedown", (evt) => {
-            this.InputState[`Mouse${evt.button}`] = 1;
-            this.InputDelta[`Mouse${evt.button}`] = 1;
-        });
-        this.Ui.addEventListener("mouseup", (evt) => {
-            this.InputState[`Mouse${evt.button}`] = 0;
-            this.InputDelta[`Mouse${evt.button}`] = -1;
-        });
-        this.Ui.addEventListener("mousemove", (evt) => {
-            this.InputState.MouseX = evt.offsetX;
-            this.InputState.MouseY = evt.offsetY;
-            this.InputDelta.MouseX = evt.movementX;
-            this.InputDelta.MouseY = evt.movementY;
-        });
-        this.Ui.addEventListener("wheel", (evt) => {
-            this.InputDelta.WheelY = evt.deltaY;
-        });
-        this.Ui.addEventListener("contextmenu", (evt) => evt.preventDefault());
-        this.Ui.addEventListener("click", () => this.Ui.requestPointerLock());
 
         this.Gl.enable(GL_DEPTH_TEST);
         this.Gl.enable(GL_CULL_FACE);
