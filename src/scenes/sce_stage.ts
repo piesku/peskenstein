@@ -20,13 +20,13 @@ export function scene_stage(game: Game) {
     // Light 1.
     instantiate(game, {
         Translation: [2, 3, 5],
-        Using: [light_directional([1, 1, 1], 1)],
+        Using: [light_directional([1, 1, 1], 0.9)],
     });
 
     // Light 2.
     instantiate(game, {
-        Translation: [-1, 1, -1],
-        Using: [light_directional([1, 1, 1], 0.5)],
+        Translation: [-1, 1, 1],
+        Using: [light_directional([1, 1, 1], 0.4)],
     });
 
     // Ground.
@@ -38,26 +38,58 @@ export function scene_stage(game: Game) {
 
     let map = [
         [1, 1, 1, 1, 1, 1, 1, 1, 1, 1],
-        [1, 0, 0, 0, 0, 0, 0, 0, 0, 1],
+        [1, 0, 0, 2, 0, 0, 0, 0, 0, 1],
         [1, 0, 1, 1, 1, 1, 1, 1, 0, 1],
         [1, 0, 1, 0, 0, 0, 0, 0, 0, 1],
-        [1, 0, 1, 0, 1, 0, 0, 1, 0, 1],
+        [1, 0, 1, 2, 1, 0, 0, 1, 0, 1],
         [1, 0, 1, 0, 1, 0, 1, 1, 0, 1],
-        [1, 0, 1, 0, 0, 0, 0, 1, 0, 1],
+        [1, 0, 1, 0, 0, 0, 2, 1, 0, 1],
         [1, 0, 1, 1, 1, 1, 0, 1, 0, 1],
-        [1, 0, 0, 0, 0, 0, 0, 0, 0, 1],
+        [1, 0, 0, 0, 0, 2, 0, 0, 0, 1],
         [1, 1, 1, 0, 1, 1, 1, 1, 1, 1],
     ];
 
+    const enum TerrainKnd {
+        Empty,
+        Wall,
+        Enemy,
+    }
+
     for (let y = 0; y < map.length; y++) {
         for (let x = 0; x < map[0].length; x++) {
-            if (map[y][x]) {
-                instantiate(game, {
-                    Translation: [x - 4.5, 1, y - 4.5],
-                    Using: [
-                        render_diffuse(game.MaterialDiffuseGouraud, game.MeshCube, [1, 1, 0.3, 1]),
-                    ],
-                });
+            switch (map[y][x]) {
+                case TerrainKnd.Wall:
+                    instantiate(game, {
+                        Translation: [x - 4.5, 1, y - 4.5],
+                        Using: [
+                            render_diffuse(game.MaterialDiffuseGouraud, game.MeshCube, [
+                                1,
+                                1,
+                                0.3,
+                                1,
+                            ]),
+                        ],
+                    });
+                    break;
+                case TerrainKnd.Enemy:
+                    instantiate(game, {
+                        Translation: [x - 4.5, 1, y - 4.5],
+                        Children: [
+                            {
+                                Translation: [0, -0.25, 0],
+                                Scale: [0.3, 0.5, 0.3],
+                                Using: [
+                                    render_diffuse(game.MaterialDiffuseGouraud, game.MeshCube, [
+                                        1,
+                                        0.3,
+                                        0.3,
+                                        1,
+                                    ]),
+                                ],
+                            },
+                        ],
+                    });
+                    break;
             }
         }
     }
