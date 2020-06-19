@@ -6,6 +6,7 @@ import {loop_start, loop_stop} from "./core.js";
 import {sys_camera} from "./systems/sys_camera.js";
 import {sys_control_player} from "./systems/sys_control_player.js";
 import {sys_framerate} from "./systems/sys_framerate.js";
+import {sys_lifespan} from "./systems/sys_lifespan.js";
 import {sys_light} from "./systems/sys_light.js";
 import {sys_move} from "./systems/sys_move.js";
 import {sys_render} from "./systems/sys_render.js";
@@ -67,6 +68,7 @@ export class Game {
 
     FrameUpdate(delta: number) {
         let now = performance.now();
+        sys_lifespan(this, delta);
         sys_control_player(this, delta);
         sys_shoot(this, delta);
         sys_move(this, delta);

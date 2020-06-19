@@ -1,5 +1,5 @@
 import {get_rotation, get_translation} from "../../common/mat4.js";
-import {render_diffuse} from "../components/com_render_diffuse.js";
+import {blueprint_projectile} from "../blueprints/blu_projectile.js";
 import {instantiate} from "../core.js";
 import {Entity, Game} from "../game.js";
 import {Has} from "../world.js";
@@ -24,10 +24,7 @@ function update(game: Game, entity: Entity, delta: number) {
             shoot.SinceLast = 0;
 
             let shooter_transform = game.World.Transform[entity];
-            let projectile = instantiate(game, {
-                Scale: [0.1, 0.1, 0.1],
-                Using: [render_diffuse(game.MaterialDiffuseGouraud, game.MeshCube, [0.3, 1, 1, 1])],
-            });
+            let projectile = instantiate(game, blueprint_projectile(game));
             let projectile_transform = game.World.Transform[projectile];
             get_translation(projectile_transform.Translation, shooter_transform.World);
             get_rotation(projectile_transform.Rotation, shooter_transform.World);
