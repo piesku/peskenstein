@@ -1,7 +1,8 @@
+import {destroy} from "../core.js";
 import {Entity, Game} from "../game.js";
 import {Has} from "../world.js";
 
-const QUERY = Has.ControlProjectile | Has.Move;
+const QUERY = Has.ControlProjectile | Has.Move | Has.Collide;
 
 export function sys_control_projectile(game: Game, delta: number) {
     for (let i = 0; i < game.World.Mask.length; i++) {
@@ -13,7 +14,15 @@ export function sys_control_projectile(game: Game, delta: number) {
 
 function update(game: Game, entity: Entity) {
     let move = game.World.Move[entity];
+    let collide = game.World.Collide[entity];
 
-    // Always move forward.
-    move.Directions.push([0, 0, 1]);
+    if (collide.Collisions.length > 0) {
+        destroy(game.World, entity);
+        for (let collision of collide.Collisions) {
+            destroy(game.World, collision.Other);
+        }
+    } else {
+        // Always move forward.
+        move.Directions.push([0, 0, 1]);
+    }
 }

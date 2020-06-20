@@ -4,6 +4,7 @@ import {mesh_cube} from "../meshes/cube.js";
 import {Camera} from "./components/com_camera.js";
 import {loop_start, loop_stop} from "./core.js";
 import {sys_camera} from "./systems/sys_camera.js";
+import {sys_collide} from "./systems/sys_collide.js";
 import {sys_control_player} from "./systems/sys_control_player.js";
 import {sys_control_projectile} from "./systems/sys_control_projectile.js";
 import {sys_framerate} from "./systems/sys_framerate.js";
@@ -75,6 +76,7 @@ export class Game {
         sys_shoot(this, delta);
         sys_move(this, delta);
         sys_transform(this, delta);
+        sys_collide(this, delta);
         sys_camera(this, delta);
         sys_light(this, delta);
         sys_render(this, delta);

@@ -1,9 +1,11 @@
+import {collide} from "../components/com_collide.js";
 import {render_diffuse} from "../components/com_render_diffuse.js";
 import {Blueprint} from "../core.js";
 import {Game} from "../game.js";
 
 export function blueprint_enemy(game: Game): Blueprint {
     return {
+        Using: [collide(true)],
         Children: [
             {
                 Translation: [0, -0.15, 0],
