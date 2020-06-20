@@ -1,5 +1,6 @@
 import {blueprint_camera_fly} from "../blueprints/blu_camera_fly.js";
 import {blueprint_enemy} from "../blueprints/blu_enemy.js";
+import {blueprint_wall} from "../blueprints/blu_wall.js";
 import {light_directional} from "../components/com_light.js";
 import {render_diffuse} from "../components/com_render_diffuse.js";
 import {instantiate} from "../core.js";
@@ -61,15 +62,8 @@ export function scene_stage(game: Game) {
             switch (map[y][x]) {
                 case TerrainKnd.Wall:
                     instantiate(game, {
+                        ...blueprint_wall(game),
                         Translation: [x - 4.5, 1, y - 4.5],
-                        Using: [
-                            render_diffuse(game.MaterialDiffuseGouraud, game.MeshCube, [
-                                1,
-                                1,
-                                0.3,
-                                1,
-                            ]),
-                        ],
                     });
                     break;
                 case TerrainKnd.Enemy:
