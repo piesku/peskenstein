@@ -1,5 +1,5 @@
-import {blueprint_camera_fly} from "../blueprints/blu_camera_fly.js";
 import {blueprint_enemy} from "../blueprints/blu_enemy.js";
+import {blueprint_player} from "../blueprints/blu_player.js";
 import {blueprint_wall} from "../blueprints/blu_wall.js";
 import {light_directional} from "../components/com_light.js";
 import {render_diffuse} from "../components/com_render_diffuse.js";
@@ -16,7 +16,7 @@ export function scene_stage(game: Game) {
     // Camera.
     instantiate(game, {
         Translation: [0, 1, 10],
-        ...blueprint_camera_fly(game),
+        ...blueprint_player(game),
     });
 
     // Light 1.

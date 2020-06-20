@@ -6,7 +6,7 @@ import {shoot} from "../components/com_shoot.js";
 import {Blueprint} from "../core.js";
 import {Game} from "../game.js";
 
-export function blueprint_camera_fly(game: Game) {
+export function blueprint_player(game: Game) {
     return <Blueprint>{
         Rotation: [0, 1, 0, 0],
         Using: [control_player(true, true), move(2, 1.3), collide(true), shoot(0.2)],
