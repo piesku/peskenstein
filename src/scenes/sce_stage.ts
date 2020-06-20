@@ -1,4 +1,5 @@
 import {blueprint_camera_fly} from "../blueprints/blu_camera_fly.js";
+import {blueprint_enemy} from "../blueprints/blu_enemy.js";
 import {light_directional} from "../components/com_light.js";
 import {render_diffuse} from "../components/com_render_diffuse.js";
 import {instantiate} from "../core.js";
@@ -73,21 +74,8 @@ export function scene_stage(game: Game) {
                     break;
                 case TerrainKnd.Enemy:
                     instantiate(game, {
+                        ...blueprint_enemy(game),
                         Translation: [x - 4.5, 1, y - 4.5],
-                        Children: [
-                            {
-                                Translation: [0, -0.15, 0],
-                                Scale: [0.3, 0.7, 0.3],
-                                Using: [
-                                    render_diffuse(game.MaterialDiffuseGouraud, game.MeshCube, [
-                                        1,
-                                        0.3,
-                                        0.3,
-                                        1,
-                                    ]),
-                                ],
-                            },
-                        ],
                     });
                     break;
             }

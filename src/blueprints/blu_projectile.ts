@@ -1,3 +1,4 @@
+import {collide} from "../components/com_collide.js";
 import {control_projectile} from "../components/com_control_projectile.js";
 import {lifespan} from "../components/com_lifespan.js";
 import {move} from "../components/com_move.js";
@@ -12,6 +13,7 @@ export function blueprint_projectile(game: Game): Blueprint {
             control_projectile(),
             move(5, 0),
             lifespan(3),
+            collide(true),
             render_diffuse(game.MaterialDiffuseGouraud, game.MeshCube, [0.3, 1, 1, 1]),
         ],
     };
