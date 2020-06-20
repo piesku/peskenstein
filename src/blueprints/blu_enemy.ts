@@ -5,7 +5,7 @@ import {Game} from "../game.js";
 
 export function blueprint_enemy(game: Game): Blueprint {
     return {
-        Using: [collide(true)],
+        Using: [collide(true, [0.4, 0.4, 0.4])],
         Children: [
             {
                 Translation: [0, -0.15, 0],
