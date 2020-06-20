@@ -13,6 +13,7 @@ import {sys_framerate} from "./systems/sys_framerate.js";
 import {sys_lifespan} from "./systems/sys_lifespan.js";
 import {sys_light} from "./systems/sys_light.js";
 import {sys_move} from "./systems/sys_move.js";
+import {sys_physics} from "./systems/sys_physics.js";
 import {sys_render} from "./systems/sys_render.js";
 import {sys_shoot} from "./systems/sys_shoot.js";
 import {sys_transform} from "./systems/sys_transform.js";
@@ -80,6 +81,8 @@ export class Game {
         sys_move(this, delta);
         sys_transform(this, delta);
         sys_collide(this, delta);
+        sys_physics(this, delta);
+        sys_transform(this, delta);
         sys_camera(this, delta);
         sys_light(this, delta);
         sys_render(this, delta);
