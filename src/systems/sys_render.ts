@@ -1,7 +1,9 @@
 import {Material} from "../../common/material.js";
 import {GL_COLOR_BUFFER_BIT, GL_DEPTH_BUFFER_BIT, GL_UNSIGNED_SHORT} from "../../common/webgl.js";
+import {BasicLayout} from "../../materials/layout_basic.js";
 import {DiffuseLayout} from "../../materials/layout_diffuse.js";
 import {RenderKind} from "../components/com_render.js";
+import {RenderBasic} from "../components/com_render_basic.js";
 import {RenderDiffuse} from "../components/com_render_diffuse.js";
 import {Transform} from "../components/com_transform.js";
 import {Game} from "../game.js";
@@ -27,6 +29,9 @@ export function sys_render(game: Game, delta: number) {
             if (render.Material !== current_material) {
                 current_material = render.Material;
                 switch (render.Kind) {
+                    case RenderKind.Basic:
+                        use_basic(game, render.Material);
+                        break;
                     case RenderKind.Diffuse:
                         use_diffuse(game, render.Material);
                         break;
@@ -39,12 +44,28 @@ export function sys_render(game: Game, delta: number) {
             }
 
             switch (render.Kind) {
+                case RenderKind.Basic:
+                    draw_basic(game, transform, render);
+                    break;
                 case RenderKind.Diffuse:
                     draw_diffuse(game, transform, render);
                     break;
             }
         }
     }
+}
+
+function use_basic(game: Game, material: Material<BasicLayout>) {
+    game.Gl.useProgram(material.Program);
+    game.Gl.uniformMatrix4fv(material.Locations.Pv, false, game.Camera!.Pv);
+}
+
+function draw_basic(game: Game, transform: Transform, render: RenderBasic) {
+    game.Gl.uniformMatrix4fv(render.Material.Locations.World, false, transform.World);
+    game.Gl.uniform4fv(render.Material.Locations.Color, render.Color);
+    game.ExtVao.bindVertexArrayOES(render.Vao);
+    game.Gl.drawElements(render.Material.Mode, render.Mesh.IndexCount, GL_UNSIGNED_SHORT, 0);
+    game.ExtVao.bindVertexArrayOES(null);
 }
 
 function use_diffuse(game: Game, material: Material<DiffuseLayout>) {

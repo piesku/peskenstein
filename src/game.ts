@@ -1,4 +1,5 @@
 import {GL_CULL_FACE, GL_DEPTH_TEST} from "../common/webgl.js";
+import {mat1_basic_wireframe} from "../materials/mat1_basic_wireframe.js";
 import {mat1_diffuse_gouraud} from "../materials/mat1_diffuse_gouraud.js";
 import {mesh_cube} from "../meshes/cube.js";
 import {Camera} from "./components/com_camera.js";
@@ -7,6 +8,7 @@ import {sys_camera} from "./systems/sys_camera.js";
 import {sys_collide} from "./systems/sys_collide.js";
 import {sys_control_player} from "./systems/sys_control_player.js";
 import {sys_control_projectile} from "./systems/sys_control_projectile.js";
+import {sys_debug} from "./systems/sys_debug.js";
 import {sys_framerate} from "./systems/sys_framerate.js";
 import {sys_lifespan} from "./systems/sys_lifespan.js";
 import {sys_light} from "./systems/sys_light.js";
@@ -33,6 +35,7 @@ export class Game {
     Gl = this.CanvasScene.getContext("webgl")!;
     ExtVao = this.Gl.getExtension("OES_vertex_array_object")!;
 
+    MaterialWireframe = mat1_basic_wireframe(this.Gl);
     MaterialDiffuseGouraud = mat1_diffuse_gouraud(this.Gl);
     MeshCube = mesh_cube(this.Gl);
 
@@ -80,6 +83,8 @@ export class Game {
         sys_camera(this, delta);
         sys_light(this, delta);
         sys_render(this, delta);
-        sys_framerate(this, delta, performance.now() - now);
+
+        true && sys_debug(this, delta);
+        true && sys_framerate(this, delta, performance.now() - now);
     }
 }
