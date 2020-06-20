@@ -19,7 +19,10 @@ function update(game: Game, entity: Entity) {
     if (collide.Collisions.length > 0) {
         destroy(game.World, entity);
         for (let collision of collide.Collisions) {
-            destroy(game.World, collision.Other);
+            if (game.World.Mask[collision.Other] & Has.Health) {
+                let health = game.World.Health[collision.Other];
+                health.Damage += 1;
+            }
         }
     } else {
         // Always move forward.

@@ -10,6 +10,7 @@ import {sys_control_player} from "./systems/sys_control_player.js";
 import {sys_control_projectile} from "./systems/sys_control_projectile.js";
 import {sys_debug} from "./systems/sys_debug.js";
 import {sys_framerate} from "./systems/sys_framerate.js";
+import {sys_health} from "./systems/sys_health.js";
 import {sys_lifespan} from "./systems/sys_lifespan.js";
 import {sys_light} from "./systems/sys_light.js";
 import {sys_move} from "./systems/sys_move.js";
@@ -77,6 +78,7 @@ export class Game {
         sys_lifespan(this, delta);
         sys_control_player(this, delta);
         sys_control_projectile(this, delta);
+        sys_health(this, delta);
         sys_shoot(this, delta);
         sys_move(this, delta);
         sys_transform(this, delta);
