@@ -14,9 +14,9 @@ export function scene_stage(game: Game) {
     game.ViewportResized = true;
     game.Gl.clearColor(0.9, 0.9, 0.9, 1);
 
-    // Camera.
+    // Player.
     instantiate(game, {
-        Translation: [0, 1, 10],
+        Translation: [-1.5, 1, 7],
         ...blueprint_player(game),
     });
 
