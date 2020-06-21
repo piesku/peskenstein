@@ -51,7 +51,7 @@ export function scene_stage(game: Game) {
         [1, 1, 1, 0, 1, 1, 1, 1, 1, 1],
     ];
 
-    const enum TerrainKnd {
+    const enum TerrainKind {
         Empty,
         Wall,
         Enemy,
@@ -60,13 +60,13 @@ export function scene_stage(game: Game) {
     for (let y = 0; y < map.length; y++) {
         for (let x = 0; x < map[0].length; x++) {
             switch (map[y][x]) {
-                case TerrainKnd.Wall:
+                case TerrainKind.Wall:
                     instantiate(game, {
                         ...blueprint_wall(game),
                         Translation: [x - 4.5, 1, y - 4.5],
                     });
                     break;
-                case TerrainKnd.Enemy:
+                case TerrainKind.Enemy:
                     instantiate(game, {
                         ...blueprint_enemy(game),
                         Translation: [x - 4.5, 1, y - 4.5],
