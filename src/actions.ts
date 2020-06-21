@@ -1,3 +1,4 @@
+import {destroy} from "./core.js";
 import {Entity, Game} from "./game.js";
 
 export const enum Action {
@@ -7,8 +8,8 @@ export const enum Action {
 export function dispatch(game: Game, action: Action, payload: unknown) {
     switch (action) {
         case Action.CollectItem: {
-            let id = payload as Entity;
-            alert(`Item ${id} collected!`);
+            let entity = payload as Entity;
+            destroy(game.World, entity);
             break;
         }
     }
