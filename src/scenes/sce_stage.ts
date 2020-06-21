@@ -1,4 +1,5 @@
 import {blueprint_enemy} from "../blueprints/blu_enemy.js";
+import {blueprint_item} from "../blueprints/blu_item.js";
 import {blueprint_player} from "../blueprints/blu_player.js";
 import {blueprint_wall} from "../blueprints/blu_wall.js";
 import {light_directional} from "../components/com_light.js";
@@ -47,7 +48,7 @@ export function scene_stage(game: Game) {
         [1, 0, 1, 0, 1, 0, 1, 1, 0, 1],
         [1, 0, 1, 0, 0, 0, 2, 1, 0, 1],
         [1, 0, 1, 1, 1, 1, 0, 1, 0, 1],
-        [1, 0, 0, 0, 0, 2, 0, 0, 0, 1],
+        [1, 0, 0, 3, 0, 2, 0, 0, 0, 1],
         [1, 1, 1, 0, 1, 1, 1, 1, 1, 1],
     ];
 
@@ -55,6 +56,7 @@ export function scene_stage(game: Game) {
         Empty,
         Wall,
         Enemy,
+        Item,
     }
 
     for (let y = 0; y < map.length; y++) {
@@ -69,6 +71,12 @@ export function scene_stage(game: Game) {
                 case TerrainKind.Enemy:
                     instantiate(game, {
                         ...blueprint_enemy(game),
+                        Translation: [x - 4.5, 1, y - 4.5],
+                    });
+                    break;
+                case TerrainKind.Item:
+                    instantiate(game, {
+                        ...blueprint_item(game),
                         Translation: [x - 4.5, 1, y - 4.5],
                     });
                     break;
