@@ -18,6 +18,7 @@ import {sys_physics} from "./systems/sys_physics.js";
 import {sys_render} from "./systems/sys_render.js";
 import {sys_shoot} from "./systems/sys_shoot.js";
 import {sys_transform} from "./systems/sys_transform.js";
+import {sys_trigger} from "./systems/sys_trigger.js";
 import {World} from "./world.js";
 
 export type Entity = number;
@@ -83,6 +84,7 @@ export class Game {
         sys_move(this, delta);
         sys_transform(this, delta);
         sys_collide(this, delta);
+        sys_trigger(this, delta);
         sys_physics(this, delta);
         sys_transform(this, delta);
         sys_camera(this, delta);

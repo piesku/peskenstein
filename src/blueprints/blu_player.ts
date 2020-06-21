@@ -6,8 +6,8 @@ import {shoot} from "../components/com_shoot.js";
 import {Blueprint} from "../core.js";
 import {Game} from "../game.js";
 
-export function blueprint_player(game: Game) {
-    return <Blueprint>{
+export function blueprint_player(game: Game): Blueprint {
+    return {
         Rotation: [0, 1, 0, 0],
         Using: [
             control_player(true, true),
