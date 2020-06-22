@@ -8,6 +8,7 @@ export const enum Action {
 export function dispatch(game: Game, action: Action, payload: unknown) {
     switch (action) {
         case Action.CollectItem: {
+            game.ItemsCollected++;
             let entity = payload as Entity;
             destroy(game.World, entity);
             break;

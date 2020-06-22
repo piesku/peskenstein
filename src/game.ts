@@ -19,6 +19,7 @@ import {sys_render} from "./systems/sys_render.js";
 import {sys_shoot} from "./systems/sys_shoot.js";
 import {sys_transform} from "./systems/sys_transform.js";
 import {sys_trigger} from "./systems/sys_trigger.js";
+import {sys_ui} from "./systems/sys_ui.js";
 import {World} from "./world.js";
 
 export type Entity = number;
@@ -46,6 +47,10 @@ export class Game {
     // The rendering pipeline supports 8 lights.
     LightPositions = new Float32Array(4 * 8);
     LightDetails = new Float32Array(4 * 8);
+
+    // UI State
+    ItemsAvailable = 0;
+    ItemsCollected = 0;
 
     constructor() {
         document.addEventListener("visibilitychange", () =>
@@ -90,6 +95,7 @@ export class Game {
         sys_camera(this, delta);
         sys_light(this, delta);
         sys_render(this, delta);
+        sys_ui(this, delta);
 
         true && sys_debug(this, delta);
         true && sys_framerate(this, delta, performance.now() - now);
