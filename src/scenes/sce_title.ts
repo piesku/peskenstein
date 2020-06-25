@@ -1,23 +1,21 @@
-import {blueprint_enemy} from "../blueprints/blu_enemy.js";
-import {blueprint_item} from "../blueprints/blu_item.js";
-import {blueprint_player} from "../blueprints/blu_player.js";
 import {blueprint_wall} from "../blueprints/blu_wall.js";
+import {camera} from "../components/com_camera.js";
 import {light_directional} from "../components/com_light.js";
 import {render_diffuse} from "../components/com_render_diffuse.js";
 import {instantiate} from "../core.js";
 import {Game} from "../game.js";
 import {World} from "../world.js";
 
-export function scene_stage(game: Game) {
+export function scene_title(game: Game) {
     game.World = new World();
     game.Camera = undefined;
     game.ViewportResized = true;
     game.Gl.clearColor(0.9, 0.9, 0.9, 1);
 
-    // Player.
+    // Camera.
     instantiate(game, {
-        Translation: [-1.5, 1, 8],
-        ...blueprint_player(game),
+        Translation: [-1.5, 1, 0],
+        Using: [camera(1, 0.1, 1000)],
     });
 
     // Light 1.
@@ -39,28 +37,15 @@ export function scene_stage(game: Game) {
         Using: [render_diffuse(game.MaterialDiffuseGouraud, game.MeshCube, [1, 1, 0.3, 1])],
     });
 
-    // Set the UI state for this scene.
-    game.ItemsAvailable = 5;
-    game.ItemsCollected = 0;
-
     let map = [
-        [1, 1, 1, 1, 1, 1, 1, 1, 1, 1],
-        [1, 3, 0, 2, 0, 0, 0, 0, 0, 1],
-        [1, 0, 1, 1, 1, 1, 1, 1, 0, 1],
-        [1, 0, 1, 3, 0, 0, 0, 0, 0, 1],
-        [1, 0, 1, 2, 1, 0, 3, 1, 0, 1],
-        [1, 0, 1, 0, 1, 0, 1, 1, 0, 1],
-        [1, 0, 1, 0, 0, 0, 2, 1, 3, 1],
-        [1, 0, 1, 1, 1, 1, 0, 1, 0, 1],
-        [1, 0, 0, 3, 0, 2, 0, 0, 0, 1],
-        [1, 1, 1, 0, 1, 1, 1, 1, 1, 1],
+        [0, 0, 1, 1, 1, 0, 0],
+        [0, 0, 0, 0, 0, 0, 0],
+        [1, 1, 1, 0, 1, 1, 1],
     ];
 
     const enum TerrainKind {
         Empty,
         Wall,
-        Enemy,
-        Item,
     }
 
     for (let y = 0; y < map.length; y++) {
@@ -69,18 +54,6 @@ export function scene_stage(game: Game) {
                 case TerrainKind.Wall:
                     instantiate(game, {
                         ...blueprint_wall(game),
-                        Translation: [x - 4.5, 1, y - 4.5],
-                    });
-                    break;
-                case TerrainKind.Enemy:
-                    instantiate(game, {
-                        ...blueprint_enemy(game),
-                        Translation: [x - 4.5, 1, y - 4.5],
-                    });
-                    break;
-                case TerrainKind.Item:
-                    instantiate(game, {
-                        ...blueprint_item(game),
                         Translation: [x - 4.5, 1, y - 4.5],
                     });
                     break;
