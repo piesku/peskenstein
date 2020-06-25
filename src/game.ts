@@ -103,7 +103,7 @@ export class Game {
         sys_render(this, delta);
         sys_ui(this, delta);
 
-        true && sys_debug(this, delta);
+        false && sys_debug(this, delta);
         true && sys_framerate(this, delta, performance.now() - now);
     }
 }
