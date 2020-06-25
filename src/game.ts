@@ -24,6 +24,11 @@ import {World} from "./world.js";
 
 export type Entity = number;
 
+export const enum View {
+    Title,
+    Playing,
+}
+
 export class Game {
     World = new World();
 
@@ -49,6 +54,7 @@ export class Game {
     LightDetails = new Float32Array(4 * 8);
 
     // UI State
+    View = View.Title;
     ItemsAvailable = 0;
     ItemsCollected = 0;
 
