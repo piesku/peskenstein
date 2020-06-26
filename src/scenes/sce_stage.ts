@@ -1,4 +1,5 @@
 import {blueprint_enemy} from "../blueprints/blu_enemy.js";
+import {blueprint_exit} from "../blueprints/blu_exit.js";
 import {blueprint_item} from "../blueprints/blu_item.js";
 import {blueprint_player} from "../blueprints/blu_player.js";
 import {blueprint_wall} from "../blueprints/blu_wall.js";
@@ -48,19 +49,20 @@ export function scene_stage(game: Game) {
         [1, 3, 0, 2, 0, 0, 0, 0, 0, 1],
         [1, 0, 1, 1, 1, 1, 1, 1, 0, 1],
         [1, 0, 1, 3, 0, 0, 0, 0, 0, 1],
-        [1, 0, 1, 2, 1, 0, 3, 1, 0, 1],
+        [1, 4, 1, 2, 1, 0, 3, 1, 0, 1],
         [1, 0, 1, 0, 1, 0, 1, 1, 0, 1],
         [1, 0, 1, 0, 0, 0, 2, 1, 3, 1],
-        [1, 0, 1, 1, 1, 1, 0, 1, 0, 1],
+        [1, 1, 1, 1, 1, 1, 0, 1, 0, 1],
         [1, 0, 0, 3, 0, 2, 0, 0, 0, 1],
         [1, 1, 1, 0, 1, 1, 1, 1, 1, 1],
     ];
 
     const enum TerrainKind {
-        Empty,
-        Wall,
-        Enemy,
-        Item,
+        Empty = 0,
+        Wall = 1,
+        Enemy = 2,
+        Item = 3,
+        Exit = 4,
     }
 
     for (let y = 0; y < map.length; y++) {
@@ -81,6 +83,12 @@ export function scene_stage(game: Game) {
                 case TerrainKind.Item:
                     instantiate(game, {
                         ...blueprint_item(game),
+                        Translation: [x - 4.5, 1, y - 4.5],
+                    });
+                    break;
+                case TerrainKind.Exit:
+                    instantiate(game, {
+                        ...blueprint_exit(game),
                         Translation: [x - 4.5, 1, y - 4.5],
                     });
                     break;

@@ -1,10 +1,12 @@
 import {destroy} from "./core.js";
 import {Entity, Game, View} from "./game.js";
 import {scene_stage} from "./scenes/sce_stage.js";
+import {Has} from "./world.js";
 
 export const enum Action {
     StartPlaying,
     CollectItem,
+    Exit,
 }
 
 export function dispatch(game: Game, action: Action, payload: unknown) {
@@ -16,8 +18,14 @@ export function dispatch(game: Game, action: Action, payload: unknown) {
         }
         case Action.CollectItem: {
             game.ItemsCollected++;
-            let entity = payload as Entity;
-            destroy(game.World, entity);
+            let [trigger, other] = payload as [Entity, Entity];
+            destroy(game.World, trigger);
+            break;
+        }
+        case Action.Exit: {
+            let [trigger, other] = payload as [Entity, Entity];
+            destroy(game.World, trigger);
+            game.World.Mask[other] &= ~Has.ControlPlayer;
             break;
         }
     }
