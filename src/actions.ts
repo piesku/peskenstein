@@ -12,7 +12,7 @@ export const enum Action {
 export function dispatch(game: Game, action: Action, payload: unknown) {
     switch (action) {
         case Action.StartPlaying: {
-            game.View = View.Playing;
+            game.View = View.LevelPlaying;
             scene_stage(game);
             break;
         }
@@ -26,6 +26,7 @@ export function dispatch(game: Game, action: Action, payload: unknown) {
             let [trigger, other] = payload as [Entity, Entity];
             destroy(game.World, trigger);
             game.World.Mask[other] &= ~Has.ControlPlayer;
+            game.View = View.LevelSummary;
             break;
         }
     }

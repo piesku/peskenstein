@@ -26,7 +26,8 @@ export type Entity = number;
 
 export const enum View {
     Title,
-    Playing,
+    LevelPlaying,
+    LevelSummary,
 }
 
 export class Game {
