@@ -31,6 +31,7 @@ export const enum View {
 }
 
 export class Game {
+    MapIndex = 0;
     World = new World();
 
     ViewportWidth = 0;

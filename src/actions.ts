@@ -1,5 +1,6 @@
 import {destroy} from "./core.js";
 import {Entity, Game, View} from "./game.js";
+import {maps} from "./scenes/maps.js";
 import {scene_stage} from "./scenes/sce_stage.js";
 import {Has} from "./world.js";
 
@@ -13,7 +14,9 @@ export function dispatch(game: Game, action: Action, payload: unknown) {
     switch (action) {
         case Action.StartPlaying: {
             game.View = View.LevelPlaying;
-            scene_stage(game);
+            let current_map = maps[game.MapIndex];
+            game.MapIndex = current_map.next;
+            scene_stage(game, maps[game.MapIndex]);
             break;
         }
         case Action.CollectItem: {
