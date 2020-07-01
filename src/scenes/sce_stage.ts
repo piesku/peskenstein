@@ -17,14 +17,14 @@ export function scene_stage(game: Game) {
 
     // Light 1.
     instantiate(game, {
-        Translation: [2, 3, 5],
+        Translation: [3, 1, 1],
         Using: [light_directional([1, 1, 1], 0.9)],
     });
 
     // Light 2.
     instantiate(game, {
-        Translation: [-1, 1, 1],
-        Using: [light_directional([1, 1, 1], 0.4)],
+        Translation: [-1, 1, 0],
+        Using: [light_directional([1, 1, 1], 0.7)],
     });
 
     // Ground.
@@ -38,63 +38,64 @@ export function scene_stage(game: Game) {
     game.ItemsAvailable = 5;
     game.ItemsCollected = 0;
 
+    let width = 10;
+    // prettier-ignore
     let map = [
-        [1, 1, 1, 1, 1, 1, 1, 1, 1, 1],
-        [1, 3, 0, 2, 0, 0, 0, 0, 0, 1],
-        [1, 0, 1, 1, 1, 1, 1, 1, 0, 1],
-        [1, 0, 1, 3, 0, 0, 0, 0, 0, 1],
-        [1, 4, 1, 2, 1, 0, 3, 1, 0, 1],
-        [1, 0, 1, 0, 1, 0, 1, 1, 0, 1],
-        [1, 0, 1, 0, 0, 0, 2, 1, 3, 1],
-        [1, 1, 1, 1, 1, 1, 0, 1, 0, 1],
-        [1, 5, 0, 3, 0, 2, 0, 0, 0, 1],
-        [1, 1, 1, 1, 1, 1, 1, 1, 1, 1],
+        1, 1, 1, 1, 1, 1, 1, 1, 1, 1,
+        1, 0, 0, 0, 0, 4, 0, 0, 0, 1,
+        1, 0, 1, 0, 1, 1, 1, 1, 0, 1,
+        1, 0, 1, 0, 4, 1, 5, 0, 0, 1,
+        1, 0, 1, 0, 0, 0, 0, 1, 4, 1,
+        1, 0, 1, 0, 1, 1, 0, 1, 0, 1,
+        1, 5, 1, 5, 0, 4, 0, 1, 0, 1,
+        1, 4, 1, 1, 1, 1, 1, 1, 0, 1,
+        1, 0, 0, 0, 0, 0, 3, 1, 2, 1,
+        1, 1, 1, 1, 1, 1, 1, 1, 1, 1,
     ];
 
     const enum TerrainKind {
         Empty = 0,
         Wall = 1,
-        Enemy = 2,
-        Item = 3,
-        Exit = 4,
-        Player = 5,
+        Player = 2,
+        Exit = 3,
+        Item = 4,
+        Enemy = 5,
     }
 
-    for (let y = 0; y < map.length; y++) {
-        for (let x = 0; x < map[0].length; x++) {
-            switch (map[y][x]) {
-                case TerrainKind.Wall:
-                    instantiate(game, {
-                        ...blueprint_wall(game),
-                        Translation: [x - 4.5, 1, y - 4.5],
-                    });
-                    break;
-                case TerrainKind.Enemy:
-                    instantiate(game, {
-                        ...blueprint_enemy(game),
-                        Translation: [x - 4.5, 1, y - 4.5],
-                    });
-                    break;
-                case TerrainKind.Item:
-                    instantiate(game, {
-                        ...blueprint_item(game),
-                        Translation: [x - 4.5, 1, y - 4.5],
-                    });
-                    break;
-                case TerrainKind.Exit:
-                    instantiate(game, {
-                        ...blueprint_exit(game),
-                        Translation: [x - 4.5, 1, y - 4.5],
-                    });
-                    break;
-                case TerrainKind.Player:
-                    instantiate(game, {
-                        ...blueprint_player(game),
-                        Translation: [x - 4.5, 1, y - 4.5],
-                        Rotation: [0, -0.707, 0, -0.707],
-                    });
-                    break;
-            }
+    for (let i = 0; i < map.length; i++) {
+        let x = i % width;
+        let y = Math.floor(i / width);
+        switch (map[i]) {
+            case TerrainKind.Wall:
+                instantiate(game, {
+                    ...blueprint_wall(game),
+                    Translation: [x - 4.5, 1, y - 4.5],
+                });
+                break;
+            case TerrainKind.Enemy:
+                instantiate(game, {
+                    ...blueprint_enemy(game),
+                    Translation: [x - 4.5, 1, y - 4.5],
+                });
+                break;
+            case TerrainKind.Item:
+                instantiate(game, {
+                    ...blueprint_item(game),
+                    Translation: [x - 4.5, 1, y - 4.5],
+                });
+                break;
+            case TerrainKind.Exit:
+                instantiate(game, {
+                    ...blueprint_exit(game),
+                    Translation: [x - 4.5, 1, y - 4.5],
+                });
+                break;
+            case TerrainKind.Player:
+                instantiate(game, {
+                    ...blueprint_player(game),
+                    Translation: [x - 4.5, 1, y - 4.5],
+                });
+                break;
         }
     }
 }
