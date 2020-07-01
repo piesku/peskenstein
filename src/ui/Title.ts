@@ -13,7 +13,7 @@ export function Title() {
         >
             <h1 style="font-size: 6rem;">Castle Peskenstein</h1>
             <button
-                onclick="$(${Action.StartPlaying})"
+                onclick="$(${Action.NextLevel})"
                 style="padding: 20px; font-size: 2rem; font-weight: bold;"
             >
                 Play Now

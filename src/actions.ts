@@ -5,14 +5,14 @@ import {scene_stage} from "./scenes/sce_stage.js";
 import {Has} from "./world.js";
 
 export const enum Action {
-    StartPlaying,
+    NextLevel,
     CollectItem,
     Exit,
 }
 
 export function dispatch(game: Game, action: Action, payload: unknown) {
     switch (action) {
-        case Action.StartPlaying: {
+        case Action.NextLevel: {
             game.View = View.LevelPlaying;
             let current_map = maps[game.MapIndex];
             game.MapIndex = current_map.next;
