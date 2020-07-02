@@ -1,15 +1,12 @@
-import {collide, CollisionLayer} from "../components/com_collide.js";
+import {collide} from "../components/com_collide.js";
 import {health} from "../components/com_health.js";
 import {render_diffuse} from "../components/com_render_diffuse.js";
 import {Blueprint} from "../core.js";
-import {Game} from "../game.js";
+import {Game, Layer} from "../game.js";
 
 export function blueprint_enemy(game: Game): Blueprint {
     return {
-        Using: [
-            collide(true, CollisionLayer.Enemy, CollisionLayer.None, [0.4, 0.4, 0.4]),
-            health(3),
-        ],
+        Using: [collide(true, Layer.Enemy, Layer.None, [0.4, 0.4, 0.4]), health(3)],
         Children: [
             {
                 Translation: [0, -0.15, 0],

@@ -109,3 +109,11 @@ export class Game {
         true && sys_framerate(this, delta, performance.now() - now);
     }
 }
+
+export const enum Layer {
+    None,
+    Player = 1 << 0,
+    Terrain = 1 << 1,
+    Projectile = 1 << 2,
+    Enemy = 1 << 3,
+}

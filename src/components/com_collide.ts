@@ -1,6 +1,6 @@
 import {AABB} from "../../common/aabb.js";
 import {Vec3} from "../../common/math.js";
-import {Entity, Game} from "../game.js";
+import {Entity, Game, Layer} from "../game.js";
 import {Has} from "../world.js";
 
 export interface Collide extends AABB {
@@ -13,14 +13,14 @@ export interface Collide extends AABB {
     Dynamic: boolean;
     /** Collisions detected with this collider during this tick. */
     Collisions: Array<Collision>;
-    Layers: CollisionLayer;
-    IntersectWith: CollisionLayer;
+    Layers: Layer;
+    IntersectWith: Layer;
 }
 
 export function collide(
     dynamic: boolean = true,
-    layers = CollisionLayer.None,
-    intersect_with = CollisionLayer.None,
+    layers = Layer.None,
+    intersect_with = Layer.None,
     size: [number, number, number] = [1, 1, 1]
 ) {
     return (game: Game, entity: Entity) => {
@@ -46,12 +46,4 @@ export interface Collision {
     Other: Entity;
     /** The direction and magnitude of the hit from this collider's POV. */
     Hit: Vec3;
-}
-
-export const enum CollisionLayer {
-    None,
-    Player = 1 << 0,
-    Terrain = 1 << 1,
-    Projectile = 1 << 2,
-    Enemy = 1 << 3,
 }
