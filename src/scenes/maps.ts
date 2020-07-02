@@ -20,7 +20,8 @@ export const enum TileKind {
     Exit = 3,
     Item = 4,
     Enemy = 5,
-    DoorVertical = 6,
+    DoorEast = 6,
+    DoorNorth = 7,
 }
 
 export const maps: Array<LevelMap> = [
@@ -36,23 +37,28 @@ export const maps: Array<LevelMap> = [
             0, 0, 0, 0, 0, 0, 0,
         ],
         width: 7,
-        next: 2,
+        next: 1,
     },
     {
         // prettier-ignore
         tiles: [
-            1, 1, 1, 1, 1, 1, 1, 1, 1, 1,
-            1, 0, 0, 0, 0, 4, 0, 0, 0, 1,
-            1, 0, 1, 0, 1, 1, 1, 1, 0, 1,
-            1, 0, 1, 0, 4, 1, 5, 0, 0, 1,
-            1, 0, 1, 0, 0, 0, 0, 1, 4, 1,
-            1, 0, 1, 0, 1, 1, 0, 1, 6, 1,
-            1, 5, 1, 5, 0, 4, 0, 1, 0, 1,
-            1, 4, 1, 1, 1, 1, 1, 1, 0, 1,
-            1, 0, 0, 0, 0, 0, 3, 1, 2, 1,
-            1, 1, 1, 1, 1, 1, 1, 1, 1, 1,
+            1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1,
+            1, 1, 0, 0, 0, 0, 0, 0, 0, 0, 0, 1, 1, 1, 1,
+            1, 0, 0, 0, 5, 0, 0, 0, 0, 0, 5, 7, 0, 3, 1,
+            1, 1, 0, 0, 0, 0, 0, 0, 0, 0, 0, 1, 1, 1, 1,
+            1, 1, 1, 6, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1,
+            1, 1, 0, 0, 0, 1, 1, 0, 4, 0, 1, 0, 4, 0, 1,
+            1, 0, 0, 0, 0, 0, 1, 0, 0, 0, 1, 0, 0, 0, 1,
+            1, 0, 0, 0, 0, 0, 1, 1, 6, 1, 1, 1, 6, 1, 1,
+            1, 0, 0, 0, 0, 0, 1, 0, 0, 0, 0, 0, 0, 0, 1,
+            1, 0, 0, 5, 0, 0, 7, 0, 0, 0, 0, 0, 0, 0, 1,
+            1, 1, 0, 0, 0, 1, 1, 0, 0, 0, 0, 0, 0, 0, 1,
+            1, 1, 1, 6, 1, 1, 1, 1, 6, 1, 1, 1, 6, 1, 1,
+            1, 0, 0, 0, 0, 0, 1, 0, 0, 0, 1, 0, 0, 0, 1,
+            1, 0, 4, 0, 4, 0, 1, 0, 4, 0, 1, 0, 2, 0, 1,
+            1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1
         ],
-        width: 10,
+        width: 15,
         next: 2,
     },
     {
@@ -128,10 +134,18 @@ export function build_level(game: Game, map: LevelMap) {
                     Translation: [x - 4.5, 1, y - 4.5],
                 });
                 break;
-            case TileKind.DoorVertical:
+            case TileKind.DoorEast:
                 instantiate(game, {
                     ...blueprint_door(game),
                     Translation: [x - 4.5, 1, y - 4.5],
+                });
+                break;
+            case TileKind.DoorNorth:
+                instantiate(game, {
+                    ...blueprint_door(game),
+                    Translation: [x - 4.5, 1, y - 4.5],
+                    // +90° on the Y axis
+                    Rotation: [0, 0.707, 0, 0.707],
                 });
                 break;
         }
