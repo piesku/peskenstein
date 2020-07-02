@@ -1,3 +1,4 @@
+import {Animate} from "./components/com_animate.js";
 import {Camera} from "./components/com_camera.js";
 import {Collide} from "./components/com_collide.js";
 import {ControlPlayer} from "./components/com_control_player.js";
@@ -11,6 +12,7 @@ import {Transform} from "./components/com_transform.js";
 import {Trigger} from "./components/com_trigger.js";
 
 const enum Component {
+    Animate,
     Camera,
     Collide,
     ControlPlayer,
@@ -20,12 +22,14 @@ const enum Component {
     Light,
     Move,
     Render,
+    RigidBody,
     Shoot,
     Transform,
     Trigger,
 }
 
 export const enum Has {
+    Animate = 1 << Component.Animate,
     Camera = 1 << Component.Camera,
     Collide = 1 << Component.Collide,
     ControlPlayer = 1 << Component.ControlPlayer,
@@ -35,6 +39,7 @@ export const enum Has {
     Light = 1 << Component.Light,
     Move = 1 << Component.Move,
     Render = 1 << Component.Render,
+    RigidBody = 1 << Component.RigidBody,
     Shoot = 1 << Component.Shoot,
     Transform = 1 << Component.Transform,
     Trigger = 1 << Component.Trigger,
@@ -44,6 +49,7 @@ export class World {
     // Component flags
     Mask: Array<number> = [];
     // Component data
+    Animate: Array<Animate> = [];
     Camera: Array<Camera> = [];
     Collide: Array<Collide> = [];
     ControlPlayer: Array<ControlPlayer> = [];

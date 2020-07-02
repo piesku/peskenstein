@@ -1,3 +1,4 @@
+import {blueprint_door} from "../blueprints/blu_door.js";
 import {blueprint_enemy} from "../blueprints/blu_enemy.js";
 import {blueprint_exit} from "../blueprints/blu_exit.js";
 import {blueprint_item} from "../blueprints/blu_item.js";
@@ -19,6 +20,7 @@ export const enum TileKind {
     Exit = 3,
     Item = 4,
     Enemy = 5,
+    DoorVertical = 6,
 }
 
 export const maps: Array<LevelMap> = [
@@ -34,7 +36,7 @@ export const maps: Array<LevelMap> = [
             0, 0, 0, 0, 0, 0, 0,
         ],
         width: 7,
-        next: 1,
+        next: 2,
     },
     {
         // prettier-ignore
@@ -44,7 +46,7 @@ export const maps: Array<LevelMap> = [
             1, 0, 1, 0, 1, 1, 1, 1, 0, 1,
             1, 0, 1, 0, 4, 1, 5, 0, 0, 1,
             1, 0, 1, 0, 0, 0, 0, 1, 4, 1,
-            1, 0, 1, 0, 1, 1, 0, 1, 0, 1,
+            1, 0, 1, 0, 1, 1, 0, 1, 6, 1,
             1, 5, 1, 5, 0, 4, 0, 1, 0, 1,
             1, 4, 1, 1, 1, 1, 1, 1, 0, 1,
             1, 0, 0, 0, 0, 0, 3, 1, 2, 1,
@@ -63,16 +65,16 @@ export const maps: Array<LevelMap> = [
             1, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 1,
             1, 0, 0, 0, 0, 1, 1, 0, 0, 0, 0, 0, 0, 1, 0, 0, 0, 0, 0, 1,
             1, 0, 0, 0, 0, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 0, 0, 0, 1, 1,
-            1, 1, 0, 0, 1, 1, 1, 0, 0, 0, 0, 1, 1, 1, 1, 1, 0, 1, 1, 1,
+            1, 1, 0, 0, 1, 1, 1, 0, 0, 0, 0, 1, 1, 1, 1, 1, 6, 1, 1, 1,
             1, 0, 0, 0, 0, 1, 1, 1, 1, 1, 0, 1, 1, 1, 1, 1, 0, 1, 1, 1,
             1, 0, 0, 0, 0, 1, 1, 0, 0, 0, 0, 0, 1, 1, 1, 1, 0, 1, 1, 1,
-            1, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 1, 1, 1, 0, 1, 1, 1,
+            1, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 1, 1, 1, 6, 1, 1, 1,
             1, 0, 0, 0, 0, 1, 1, 0, 0, 0, 0, 0, 1, 1, 0, 0, 0, 0, 0, 1,
             1, 1, 0, 0, 1, 1, 1, 1, 1, 1, 1, 0, 1, 1, 0, 0, 0, 0, 0, 1,
             1, 0, 0, 0, 0, 1, 1, 0, 0, 0, 1, 0, 1, 1, 0, 0, 0, 0, 0, 1,
             1, 0, 0, 0, 0, 1, 1, 0, 0, 0, 0, 0, 1, 1, 0, 0, 0, 0, 0, 1,
             1, 0, 0, 0, 0, 1, 1, 1, 1, 1, 1, 1, 1, 1, 0, 0, 0, 0, 0, 1,
-            1, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 3, 1, 1, 1, 0, 1, 1, 1,
+            1, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 3, 1, 1, 1, 6, 1, 1, 1,
             1, 0, 0, 0, 0, 1, 1, 1, 1, 1, 1, 1, 1, 1, 0, 0, 0, 0, 0, 1,
             1, 1, 0, 0, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 0, 0, 2, 0, 0, 1,
             1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1
@@ -123,6 +125,12 @@ export function build_level(game: Game, map: LevelMap) {
             case TileKind.Player:
                 instantiate(game, {
                     ...blueprint_player(game),
+                    Translation: [x - 4.5, 1, y - 4.5],
+                });
+                break;
+            case TileKind.DoorVertical:
+                instantiate(game, {
+                    ...blueprint_door(game),
                     Translation: [x - 4.5, 1, y - 4.5],
                 });
                 break;

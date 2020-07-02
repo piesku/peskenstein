@@ -1,3 +1,4 @@
+import {query_all} from "./components/com_transform.js";
 import {destroy} from "./core.js";
 import {Entity, Game, View} from "./game.js";
 import {maps} from "./scenes/maps.js";
@@ -7,6 +8,7 @@ import {Has} from "./world.js";
 export const enum Action {
     NextLevel,
     CollectItem,
+    OpenDoor,
     Exit,
 }
 
@@ -30,6 +32,14 @@ export function dispatch(game: Game, action: Action, payload: unknown) {
             destroy(game.World, trigger);
             game.World.Mask[other] &= ~Has.ControlPlayer;
             game.View = View.LevelSummary;
+            break;
+        }
+        case Action.OpenDoor: {
+            let [trigger, other] = payload as [Entity, Entity];
+            for (let child of query_all(game.World, trigger, Has.Animate)) {
+                let animate = game.World.Animate[child];
+                animate.Trigger = "move";
+            }
             break;
         }
     }

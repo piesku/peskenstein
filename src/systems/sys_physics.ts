@@ -2,7 +2,7 @@ import {add} from "../../common/vec3.js";
 import {Entity, Game} from "../game.js";
 import {Has} from "../world.js";
 
-const QUERY = Has.Transform | Has.Collide;
+const QUERY = Has.Transform | Has.Collide | Has.RigidBody;
 
 export function sys_physics(game: Game, delta: number) {
     for (let i = 0; i < game.World.Mask.length; i++) {
